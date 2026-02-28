@@ -1,17 +1,10 @@
-import { auth } from "@/auth"
-import { NextResponse } from "next/server"
+import NextAuth from "next-auth"
+import { authConfig } from "@/auth.config"
 
-export default auth((req) => {
-  const isLoggedIn = !!req.auth
-  const isOnDashboard = req.nextUrl.pathname.startsWith("/dashboard")
+// Use the edge-safe config (no Prisma / bcryptjs) to stay under the 1 MB limit.
+export const { auth: middleware } = NextAuth(authConfig)
 
-  if (isOnDashboard && !isLoggedIn) {
-    const loginUrl = new URL("/login", req.nextUrl.origin)
-    return NextResponse.redirect(loginUrl)
-  }
-
-  return NextResponse.next()
-})
+export default middleware
 
 export const config = {
   matcher: ["/dashboard/:path*"],
