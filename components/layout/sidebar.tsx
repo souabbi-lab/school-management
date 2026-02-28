@@ -48,10 +48,13 @@ export function Sidebar({ user }: SidebarProps) {
   return (
     <aside className="flex flex-col w-64 min-h-screen border-r bg-card">
       {/* Logo */}
-      <div className="flex items-center gap-2 px-6 py-5 border-b">
+      <Link
+        href="/"
+        className="flex items-center gap-2 px-6 py-5 border-b cursor-pointer hover:opacity-80 transition-opacity"
+      >
         <School className="h-6 w-6 text-primary" />
         <span className="font-bold text-lg text-primary">EduManage</span>
-      </div>
+      </Link>
 
       {/* Navigation */}
       <nav className="flex-1 px-3 py-4 space-y-1">

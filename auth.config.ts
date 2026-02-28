@@ -1,4 +1,4 @@
-import type { NextAuthConfig } from "next-auth"
+import type { NextAuthConfig } from "next-auth";
 
 /**
  * Edge-safe auth config — NO Prisma, NO bcryptjs.
@@ -13,27 +13,27 @@ export const authConfig: NextAuthConfig = {
   providers: [], // filled in auth.ts
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user
-      const isOnDashboard = nextUrl.pathname.startsWith("/dashboard")
+      const isLoggedIn = !!auth?.user;
+      const isOnDashboard = nextUrl.pathname.startsWith("/dashboard");
 
       if (isOnDashboard) {
-        return isLoggedIn // redirect to signIn page if not logged in
+        return isLoggedIn; // redirect to signIn page if not logged in
       }
-      return true
+      return true;
     },
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id
-        token.role = (user as { role: string }).role
+        token.id = user.id;
+        token.role = (user as { role: string }).role;
       }
-      return token
+      return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id as string
-        session.user.role = token.role as string
+        session.user.id = token.id as string;
+        session.user.role = token.role as string;
       }
-      return session
+      return session;
     },
   },
-}
+};
